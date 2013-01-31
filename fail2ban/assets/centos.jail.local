@@ -1,0 +1,51 @@
+[DEFAULT]
+bantime  = 3600
+maxretry = 4
+destemail = 
+action = %(action_mw)s
+
+[ssh]
+enabled  = true
+port     = ssh
+filter   = zpanel-ssh
+logpath  = /var/log/secure
+maxretry = 6
+bantime  = 360000
+
+# the zpanel-apache filter covers apache auth and overflow
+[apache]
+enabled  = true
+port     = http,https
+filter   = zpanel-apache
+logpath  = /var/zpanel/logs/domains/*/*error.log
+maxretry = 6
+
+[proftpd]
+enabled  = true
+port     = ftp,ftp-data,ftps,ftps-data
+filter   = proftpd
+logpath  = /var/zpanel/logs/proftpd/auth.log
+maxretry = 5
+
+# the zpanel-postfix filter covers postfix dovecot and sasl
+[postfix]
+enabled  = true
+port     = smtp,ssmtp
+filter   = zpanel-postfix
+logpath  = /var/log/mail.log
+maxretry = 10
+
+[apache-wootwoot]
+enabled  = true
+filter   = apache-wootwoot
+logpath  = /var/log/apache2/error.log
+maxretry = 1
+bantime  = 864000
+findtime = 3600
+ 
+[zpanel-control]
+enabled  = true
+port     = http,https
+filter   = zpanel-control
+logpath  = /var/log/apache2/other_vhosts_access.log
+maxretry = 6

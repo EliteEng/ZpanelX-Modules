@@ -1,0 +1,40 @@
+<?php
+if (!sys_versions::ShowOSPlatformVersion() == "Windows") {
+fwrite(STDOUT, "\tThis Module is currently only for Linux"\n");
+exit(1);
+}
+else {
+fwrite(STDOUT, "\tStarting Module Installation"\n");
+
+if (sys_versions::ShowOSPlatformVersion() == "Ubuntu") {
+fwrite(STDOUT, "\tSystem : UBUNTU"\n");
+shell_exec("apt-get update -qq");
+shell_exec("apt-get install -qq -y fail2ban");
+shell_exec("cp -f ../assets/ubuntu.jail.local /etc/fail2ban/");
+shell_exec("mv /etc/fail2ban/ubuntu.jail.local /etc/fail2ban/jail.local");
+shell_exec("cp -f ../assets/*.conf /etc/fail2ban/filter.d/");
+shell_exec("cp -f ../assets/zpanel-fail2ban-ubuntu /etc/cron.daily/");
+shell_exec("/etc/init.d/fail2ban restart");
+}
+else if (sys_versions::ShowOSPlatformVersion() == "CentOS") {
+fwrite(STDOUT, "\tSystem : CENTOS"\n");
+shell_exec("cd /tmp; wget 'http://dl.fedoraproject.org/pub/epel/6/x86_64/fail2ban-0.8.8-1.el6.noarch.rpm'");
+shell_exec("chmod 0700 /tmp/fail2ban-0.8.8-1.el6.noarch.rpm");
+shell_exec("rpm -Uvh /tmp/fail2ban-0.8.8-1.el6.noarch.rpm");
+shell_exec("rm -f /tmp/fail2ban-0.8.8-1.el6.noarch.rpm");
+shell_exec("cp -f ../assets/centos.jail.local /etc/fail2ban/");
+shell_exec("mv /etc/fail2ban/centos.jail.local /etc/fail2ban/jail.local");
+shell_exec("cp -f ../assets/*.conf /etc/fail2ban/filter.d/");
+shell_exec("cp -f ../assets/zpanel-fail2ban-centos /etc/cron.daily/");
+shell_exec("chkconfig --level 23 fail2ban on");
+shell_exec("service fail2ban start");
+}
+else {
+fwrite(STDOUT, "\tSystem : UNRECOGNIZED"\n");
+fwrite(STDOUT, "\tPlease Contact the developer to get your system included"\n");
+exit(1);
+}
+fwrite(STDOUT, "\tInstallation Complete"\n");
+
+}
+?>

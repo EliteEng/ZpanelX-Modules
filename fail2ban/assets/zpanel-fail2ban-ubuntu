@@ -1,0 +1,6 @@
+#!/bin/sh
+##########################################
+#Reload Fail2ban Daily to gather new logs
+##########################################
+
+/etc/init.d/fail2ban reload
