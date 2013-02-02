@@ -12,78 +12,65 @@ exit(1);
 else {
 
 $ubuntu = strpos($name,'Ubuntu');
-if ($ubuntu >= '0' ) {
+if ($ubuntu !== false ) {
 shell_exec("apt-get update -qq");
 shell_exec("apt-get install -qq -y fail2ban");
-shell_exec("cp -f ../assets/ubuntu.jail.local /etc/fail2ban/");
+shell_exec("cp -f /etc/zpanel/panel/modules/fail2ban/assets/ubuntu.jail.local /etc/fail2ban/");
 shell_exec("mv /etc/fail2ban/ubuntu.jail.local /etc/fail2ban/jail.local");
-shell_exec("cp -f ../assets/*.conf /etc/fail2ban/filter.d/");
+shell_exec("cp -f /etc/zpanel/panel/modules/fail2ban/assets/*.conf /etc/fail2ban/filter.d/");
 shell_exec("chmod 777 /etc/fail2ban/jail.local");
-shell_exec("cp -f ../assets/zpanel-fail2ban-ubuntu /etc/cron.daily/");
+shell_exec("cp -f /etc/zpanel/panel/modules/fail2ban/assets/zpanel-fail2ban-ubuntu /etc/cron.daily/");
 shell_exec("/etc/init.d/fail2ban restart");
 }
 
 $el5 = strpos($name,'el5');
-if ($el5 >= '0' ) {
+if ($el5 !== false ) {
 
-$64Bit = strpos($name,'x86_64');
-if ($64Bit >= '0' ) {
+$Bit64 = strpos($name,'x86_64');
+if ($Bit64 !== false ) {
 $arch = "x86_64";
 }
-$32Bit = strpos($name,'i386');
-if ($32Bit >= '0' ) {
+$Bit32 = strpos($name,'i386');
+if ($Bit32 !== false ) {
 $arch = "i386";
 }
 $latest = 'fail2ban-0.8.4-29.el5.noarch.rpm';
-shell_exec("cd /tmp; wget 'http://dl.fedoraproject.org/pub/epel/6/".$arch."/".$latest."'");
+shell_exec("cd /tmp; wget 'http://dl.fedoraproject.org/pub/epel/5/".$arch."/".$latest."'");
 shell_exec("chmod 0700 /tmp/".$latest);
 shell_exec("rpm -Uvh /tmp/".$latest);
 //shell_exec("rm -f /tmp/".$latest);
-shell_exec("cp -f ../assets/centos.jail.local /etc/fail2ban/");
+shell_exec("cp -f /etc/zpanel/panel/modules/fail2ban/assets/centos.jail.local /etc/fail2ban/");
 shell_exec("mv /etc/fail2ban/centos.jail.local /etc/fail2ban/jail.local");
-shell_exec("cp -f ../assets/*.conf /etc/fail2ban/filter.d/");
+shell_exec("cp -f /etc/zpanel/panel/modules/fail2ban/assets/*.conf /etc/fail2ban/filter.d/");
 shell_exec("chmod 777 /etc/fail2ban/jail.local");
-shell_exec("cp -f ../assets/zpanel-fail2ban-centos /etc/cron.daily/");
+shell_exec("cp -f /etc/zpanel/panel/modules/fail2ban/assets/zpanel-fail2ban-centos /etc/cron.daily/");
 shell_exec("chkconfig --level 23 fail2ban on");
 shell_exec("service fail2ban start");
 }
 $el6 = strpos($name,'el6');
-if ($el6 >= '0' ) {
+if ($el6 !== false ) {
 
-$64Bit = strpos($name,'x86_64');
-if ($64Bit >= '0' ) {
+$Bit64 = strpos($name,'x86_64');
+if ($Bit64 !== false ) {
 $arch = "x86_64";
 }
-$32Bit = strpos($name,'i386');
-if ($32Bit >= '0' ) {
+$Bit32 = strpos($name,'i386');
+if ($Bit32 !== false ) {
 $arch = "i386";
 }
 $latest = 'fail2ban-0.8.8-1.el6.noarch.rpm';
 shell_exec("cd /tmp; wget 'http://dl.fedoraproject.org/pub/epel/6/".$arch."/".$latest."'");
 shell_exec("chmod 0700 /tmp/".$latest);
 shell_exec("rpm -Uvh /tmp/".$latest);
-//shell_exec("rm -f /tmp/".$latest);
-shell_exec("cp -f ../assets/centos.jail.local /etc/fail2ban/");
+shell_exec("rm -f /tmp/".$latest);
+shell_exec("cp -f /etc/zpanel/panel/modules/fail2ban/assets/centos.jail.local /etc/fail2ban/");
 shell_exec("mv /etc/fail2ban/centos.jail.local /etc/fail2ban/jail.local");
-shell_exec("cp -f ../assets/*.conf /etc/fail2ban/filter.d/");
+shell_exec("cp -f /etc/zpanel/panel/modules/fail2ban/assets/*.conf /etc/fail2ban/filter.d/");
 shell_exec("chmod 777 /etc/fail2ban/jail.local");
-shell_exec("cp -f ../assets/zpanel-fail2ban-centos /etc/cron.daily/");
+shell_exec("cp -f /etc/zpanel/panel/modules/fail2ban/assets/zpanel-fail2ban-centos /etc/cron.daily/");
 shell_exec("chkconfig --level 23 fail2ban on");
 shell_exec("service fail2ban start");
 }
-else {
-shell_exec("echo 'Sorry but we do not recognise your ssytem'");
-shell_exec("echo 'Please contact the developer with the output of uname -a'");
-shell_exec("echo 'You will have to install fail2ban manually'");
-shell_exec("mkdir /etc/fail2ban");
-shell_exec("mkdir /etc/fail2ban/filter.d");
-shell_exec("cp -f ../assets/centos.jail.local /etc/fail2ban/");
-shell_exec("mv /etc/fail2ban/centos.jail.local /etc/fail2ban/jail.local");
-shell_exec("cp -f ../assets/*.conf /etc/fail2ban/filter.d/");
-shell_exec("chmod 777 /etc/fail2ban/jail.local");
-exit(1);
-}
 shell_exec("echo 'Installation Complete'");
-
 }
 ?>

@@ -2,7 +2,8 @@
 bantime  = 3600
 maxretry = 4
 destemail = 
-action = %(action_mw)s
+ignoreip = 127.0.0.0/8
+action = %(action_)s
 
 [ssh]
 enabled  = true
@@ -37,14 +38,15 @@ maxretry = 10
 
 [apache-wootwoot]
 enabled  = true
+port     = http,https
 filter   = apache-wootwoot
 logpath  = /var/log/apache2/error.log
-maxretry = 1
+maxretry = 2
 bantime  = 864000
 findtime = 3600
  
 [zpanel-control]
-enabled  = true
+enabled  = false
 port     = http,https
 filter   = zpanel-control
 logpath  = /var/log/apache2/other_vhosts_access.log
