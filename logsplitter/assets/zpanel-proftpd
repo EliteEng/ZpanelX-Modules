@@ -1,0 +1,14 @@
+/var/zpanel/logs/proftpd/access.log /var/zpanel/logs/proftpd/auth.log /var/zpanel/logs/proftpd/xferlog.www {
+        weekly
+        missingok
+        rotate 8
+        compress
+        delaycompress
+        notifempty
+        create 640 root adm
+        sharedscripts
+        postrotate
+                # reload could be not sufficient for all logs, a restart is saf$
+                invoke-rc.d proftpd reload 2>/dev/null >/dev/null || true
+        endscript
+}

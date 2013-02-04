@@ -1,0 +1,4 @@
+<?php
+shell_exec("rm -f /etc/logrotate.d/zpanel-apache2");
+shell_exec("rm -f /etc/logrotate.d/zpanel-proftpd");
+?>

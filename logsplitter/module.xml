@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <module>
-<name>Fail2Ban</name>
+<name>Log Splitter</name>
 <version>10.0.0</version>
 <defaultcat>System</defaultcat>
-<desc>Fail2Ban - Anti Intrusion System</desc>
+<desc>Log Splitter - Logrotate for ZpanelX</desc>
 <type>admin</type>
 <authorname>Rob Brown</authorname>
 <authoremail>rob@brownweb.com.au</authoremail>
 <authorurl>http://www.brownweb.com.au</authorurl>
-<updateurl>http://www.brownweb.com.au/zpanel/fail2ban/updateservice.xml</updateurl>
+<updateurl>http://www.brownweb.com.au/zpanel/logsplitter.xml</updateurl>
 </module>

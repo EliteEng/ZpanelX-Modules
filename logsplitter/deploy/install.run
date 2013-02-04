@@ -1,0 +1,17 @@
+<?php
+
+$name = shell_exec("uname -a");
+
+shell_exec("echo 'Starting Module Installation'");
+
+$win = strpos($name, 'Linux');
+if ($win === false) {
+	shell_exec("echo 'This Module is only for Linux'");
+	exit(1);
+} else {
+	shell_exec("cp -f /etc/zpanel/panel/modules/logsplitter/assets/zpanel-apache2 /etc/logrotate.d/");
+	shell_exec("cp -f /etc/zpanel/panel/modules/logsplitter/assets/zpanel-proftpd /etc/logrotate.d/");
+	shell_exec("chmod 644 /etc/logrotate.d/zpanel-apache2");
+	shell_exec("chmod 644 /etc/logrotate.d/zpanel-proftpd");
+}
+?>
