@@ -11,7 +11,9 @@ exit(1);
 }
 else {
 
-$ubuntu = strpos($name,'Ubuntu');
+$versionubuntu = shell_exec("lsb_release -d");
+
+$ubuntu = strpos($versionubuntu,'Ubuntu');
 if ($ubuntu !== false ) {
 shell_exec("apt-get update -qq");
 shell_exec("apt-get install -qq -y fail2ban");
@@ -23,22 +25,12 @@ shell_exec("cp -f /etc/zpanel/panel/modules/fail2ban/assets/zpanel-fail2ban-ubun
 shell_exec("/etc/init.d/fail2ban restart");
 }
 
-$el5 = strpos($name,'el5');
-if ($el5 !== false ) {
+$versioncentos = shell_exec("cat /etc/redhat-release");
 
-$Bit64 = strpos($name,'x86_64');
-if ($Bit64 !== false ) {
-$arch = "x86_64";
-}
-$Bit32 = strpos($name,'i386');
-if ($Bit32 !== false ) {
-$arch = "i386";
-}
-$latest = 'fail2ban-0.8.4-29.el5.noarch.rpm';
-shell_exec("cd /tmp; wget 'http://dl.fedoraproject.org/pub/epel/5/".$arch."/".$latest."'");
-shell_exec("chmod 0700 /tmp/".$latest);
-shell_exec("rpm -Uvh /tmp/".$latest);
-//shell_exec("rm -f /tmp/".$latest);
+$centos = strpos($versioncentos,'CentOS');
+if ($centos !== false ) {
+
+shell_exec("yum install fail2ban");
 shell_exec("cp -f /etc/zpanel/panel/modules/fail2ban/assets/centos.jail.local /etc/fail2ban/");
 shell_exec("mv /etc/fail2ban/centos.jail.local /etc/fail2ban/jail.local");
 shell_exec("cp -f /etc/zpanel/panel/modules/fail2ban/assets/*.conf /etc/fail2ban/filter.d/");
@@ -47,30 +39,6 @@ shell_exec("cp -f /etc/zpanel/panel/modules/fail2ban/assets/zpanel-fail2ban-cent
 shell_exec("chkconfig --level 23 fail2ban on");
 shell_exec("service fail2ban start");
 }
-$el6 = strpos($name,'el6');
-if ($el6 !== false ) {
-
-$Bit64 = strpos($name,'x86_64');
-if ($Bit64 !== false ) {
-$arch = "x86_64";
-}
-$Bit32 = strpos($name,'i386');
-if ($Bit32 !== false ) {
-$arch = "i386";
-}
-$latest = 'fail2ban-0.8.8-1.el6.noarch.rpm';
-shell_exec("cd /tmp; wget 'http://dl.fedoraproject.org/pub/epel/6/".$arch."/".$latest."'");
-shell_exec("chmod 0700 /tmp/".$latest);
-shell_exec("rpm -Uvh /tmp/".$latest);
-shell_exec("rm -f /tmp/".$latest);
-shell_exec("cp -f /etc/zpanel/panel/modules/fail2ban/assets/centos.jail.local /etc/fail2ban/");
-shell_exec("mv /etc/fail2ban/centos.jail.local /etc/fail2ban/jail.local");
-shell_exec("cp -f /etc/zpanel/panel/modules/fail2ban/assets/*.conf /etc/fail2ban/filter.d/");
-shell_exec("chmod 777 /etc/fail2ban/jail.local");
-shell_exec("cp -f /etc/zpanel/panel/modules/fail2ban/assets/zpanel-fail2ban-centos /etc/cron.daily/");
-shell_exec("chkconfig --level 23 fail2ban on");
-shell_exec("service fail2ban start");
 }
 shell_exec("echo 'Installation Complete'");
-}
 ?>

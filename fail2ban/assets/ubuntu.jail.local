@@ -24,11 +24,11 @@ maxretry = 6
 [proftpd]
 enabled  = true
 port     = ftp,ftp-data,ftps,ftps-data
-filter   = proftpd
+filter   = zpanel-proftpd
 logpath  = /var/zpanel/logs/proftpd/auth.log
 maxretry = 5
 
-# the zpanel-postfix filter covers postfix dovecot and sasl
+# the zpanel-postfix filter covers postfix and sasl
 [postfix]
 enabled  = true
 port     = smtp,ssmtp
@@ -36,18 +36,18 @@ filter   = zpanel-postfix
 logpath  = /var/log/mail.log
 maxretry = 10
 
-[apache-wootwoot]
+[control-panel]
 enabled  = true
 port     = http,https
-filter   = apache-wootwoot
+filter   = zpanel-control
 logpath  = /var/log/apache2/error.log
-maxretry = 2
+maxretry = 4
 bantime  = 864000
 findtime = 3600
- 
-[zpanel-control]
-enabled  = false
-port     = http,https
-filter   = zpanel-control
-logpath  = /var/log/apache2/other_vhosts_access.log
-maxretry = 6
+
+[dovecot]
+enabled  = true
+port     = imap,imaps,pop3,pop3s
+filter   = zpanel-dovecot
+logpath  = /var/log/dovecot-info.log
+maxretry = 10

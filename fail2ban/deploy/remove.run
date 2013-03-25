@@ -1,17 +1,6 @@
 <?php
-
-$name = shell_exec("uname -a");
-
-shell_exec("echo 'Starting Module Installation'");
-
-$win = strpos($name,'Linux');
-if ($win === false ) {
-shell_exec("echo 'This Module is only for Linux'");
-exit(1);
-}
-else {
-
-$ubuntu = strpos($name,'Ubuntu');
+$versionubuntu = shell_exec("lsb_release -d");
+$ubuntu = strpos($versionubuntu,'Ubuntu');
 if ($ubuntu !== false ) {
 shell_exec("rm -f /etc/fail2ban/filter.d/*.conf");
 shell_exec("rm -f /etc/fail2ban/jail.local");
@@ -19,24 +8,13 @@ shell_exec("apt-get -y -qq purge fail2ban");
 shell_exec("rm -f /etc/cron.daily/zpanel-fail2ban-ubuntu");
 }
 
-$el5 = strpos($name,'el5');
-if ($el5 !== false ) {
-
-$latest = 'fail2ban-0.8.4-29.el5.noarch.rpm';
-shell_exec("rm -f /etc/fail2ban/filter.d/*.conf");
-shell_exec("rm -f /etc/fail2ban/jail.local");
-shell_exec("yum remove fail2ban");
-shell_exec("rm -f /etc/cron.daily/zpanel-fail2ban-centos");
-}
-$el6 = strpos($name,'el6');
-if ($el6 !== false ) {
-
-$latest = 'fail2ban-0.8.8-1.el6.noarch.rpm';
+$versioncentos = shell_exec("cat /etc/redhat-release");
+$centos = strpos($versioncentos,'CentOS');
+if ($centos !== false ) {
 shell_exec("rm -f /etc/fail2ban/filter.d/*.conf");
 shell_exec("rm -f /etc/fail2ban/jail.local");
 shell_exec("yum remove fail2ban");
 shell_exec("rm -f /etc/cron.daily/zpanel-fail2ban-centos");
 }
 shell_exec("echo 'Installation Complete'");
-}
 ?>

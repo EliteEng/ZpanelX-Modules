@@ -1,0 +1,21 @@
+<?php
+$versionubuntu = shell_exec("lsb_release -d");
+$ubuntu = strpos($versionubuntu,'Ubuntu');
+if ($ubuntu !== false ) {
+	shell_exec("cp -f /etc/zpanel/panel/modules/fail2ban/assets/ubuntu.jail.local /etc/fail2ban/");
+	shell_exec("mv /etc/fail2ban/ubuntu.jail.local /etc/fail2ban/jail.local");
+	shell_exec("cp -f /etc/zpanel/panel/modules/fail2ban/assets/*.conf /etc/fail2ban/filter.d/");
+	shell_exec("chmod 777 /etc/fail2ban/jail.local");
+	shell_exec("/etc/init.d/fail2ban reload");
+}
+$versioncentos = shell_exec("cat /etc/redhat-release");
+$centos = strpos($versioncentos,'CentOS');
+if ($centos !== false ) {
+	shell_exec("cp -f /etc/zpanel/panel/modules/fail2ban/assets/centos.jail.local /etc/fail2ban/");
+	shell_exec("mv /etc/fail2ban/centos.jail.local /etc/fail2ban/jail.local");
+	shell_exec("cp -f /etc/zpanel/panel/modules/fail2ban/assets/*.conf /etc/fail2ban/filter.d/");
+	shell_exec("chmod 777 /etc/fail2ban/jail.local");
+	shell_exec("service fail2ban reload");
+}
+shell_exec("echo 'Installation Complete'");
+?>
